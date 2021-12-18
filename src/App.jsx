@@ -1,30 +1,27 @@
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { gql, useQuery } from "@apollo/client";
-import Persons from "../components/Persons";
 
-const ALL_PERSONS = gql`
-  query getAllPersons{
-    allPersons {
-      id
-      name
-      phone
-      address {
-        city
-        street
-      }
-    }
-  }
-`;
+import Persons from "../components/Persons";
+import PersonForm from "../components/PersonForm";
+
+import {usePersons} from '../persons/usePersons'
+import Notify from "../components/Notify";
 
 function App() {
-  const { data, error, loading: isLoading } = useQuery(ALL_PERSONS);
-
+  const { data, error, loading: isLoading } = usePersons();
+  const [errorMessage, setErrorMessage] = useState(null)
   if (error) return <span style={{ color: "red" }}>{error}</span>;
+
+  const notifyError = message => {
+    setErrorMessage(message)
+    setTimeout(() =>setErrorMessage(null), 3000)
+  }
 
   return (
     <div className="App">
       <header className="App-header">
+        <Notify errorMessage={errorMessage} />
         <img src={logo} className="App-logo" alt="logo" />
         {isLoading ? (
           <p>Loading...</p>
@@ -34,6 +31,7 @@ function App() {
             {data && <Persons persons={data.allPersons} />}
           </div>
         )}
+        <PersonForm notifyError={notifyError} />
       </header>
     </div>
   );
