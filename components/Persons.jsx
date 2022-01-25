@@ -6,17 +6,18 @@ import {FIND_A_PERSON} from "../persons/graphql-queries"
 const Persons = ({ persons }) => {
   const [getPerson, result] = useLazyQuery(FIND_A_PERSON);
   const [person, setPerson] = useState(null);
-
+  const [previousPerson, setPreviousPerson] = useState(null)
   const showPerson = (name) => {
     getPerson({ variables: { name: name } });
   };
 
   useEffect(() => {
-    if (result.data) {
+    if (result.data && person === null && previousPerson !== result.data.findPerson.name) {
+      setPreviousPerson(result.data.findPerson.name)
       setPerson(result.data.findPerson);
     }
   }, [result]);
-
+  
   if (person) {
     return (
       <div>
@@ -43,7 +44,7 @@ const Persons = ({ persons }) => {
             showPerson(person.name);
           }}
         >
-          {person.name}
+          {person.name} - {person.phone}
         </div>
       ))}
     </div>

@@ -23,3 +23,17 @@ export const CREATE_PERSON = gql`
     }
   }
 `;
+
+export const EDIT_NUMBER = gql`
+mutation($name: String!, $phone: String!) {
+  editPhoneNumber(name: $name, phone: $phone) {
+   id
+   name
+   phone
+   address {
+     city
+     street
+   }
+  }
+}
+`

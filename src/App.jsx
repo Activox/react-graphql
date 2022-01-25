@@ -4,6 +4,7 @@ import "./App.css";
 
 import Persons from "../components/Persons";
 import PersonForm from "../components/PersonForm";
+import PhoneForm from "../components/PhoneForm";
 
 import {usePersons} from '../persons/usePersons'
 import Notify from "../components/Notify";
@@ -31,6 +32,7 @@ function App() {
             {data && <Persons persons={data.allPersons} />}
           </div>
         )}
+        <PhoneForm />
         <PersonForm notifyError={notifyError} />
       </header>
     </div>
