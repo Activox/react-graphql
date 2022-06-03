@@ -4,7 +4,7 @@ import { useFormFields } from "../hooks/useFormFields";
 import { ALL_PERSONS } from "../persons/graphql-queries";
 import { CREATE_PERSON } from "../persons/graphql-mutation";
 
-const PersonForm = ({notifyError}) => {
+const PersonForm = ({ notifyError }) => {
   const [fields, handleFieldChange] = useFormFields({
     name: "",
     phone: "",
@@ -14,9 +14,9 @@ const PersonForm = ({notifyError}) => {
 
   const [createPerson] = useMutation(CREATE_PERSON, {
     refetchQueries: [{ query: ALL_PERSONS }],
-    onError: (err)=>{
-      notifyError(err.graphQLErrors[0].message)
-    }
+    onError: (err) => {
+      notifyError(err.graphQLErrors[0].message);
+    },
   });
 
   const handleSubmit = (e) => {
